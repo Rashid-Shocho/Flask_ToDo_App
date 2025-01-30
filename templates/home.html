@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - ToDo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+        ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+        ul.instructions {
+            padding-left: 20px;
+        }
+        ul.instructions li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ToDo App</div>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/webpage">My Todo</a></li>
+            <li><a href="/addtodo">Add Todo</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to the To-Do App!</h1>
+        <p>This To-Do App helps you manage your daily tasks efficiently. Below are the steps to use it:</p>
+
+        <h2>📌 How to Use</h2>
+        <ul class="instructions">
+            <li><strong>Add a Task:</strong> Click on "Add Todo" and enter the title & description of your task.</li>
+            <li><strong>View Your Todos:</strong> Click on "My Todo" to see all your saved tasks.</li>
+            <li><strong>Update a Task:</strong> Click the "Update" button next to a task to edit its details.</li>
+            <li><strong>Delete a Task:</strong> Click the "Delete" button next to a task to remove it permanently.</li>
+            <li><strong>Search a Task:</strong> Use the search bar in the navigation to find tasks by title or description.</li>
+        </ul>
+
+        <h2>📌 Features</h2>
+        <ul class="instructions">
+            <li>✔ User-friendly interface with a simple design.</li>
+            <li>✔ Easily add, edit, and delete tasks.</li>
+            <li>✔ Search functionality for quick access to tasks.</li>
+            <li>✔ Responsive design, works on desktop & mobile.</li>
+        </ul>
+
+        <p>Start managing your tasks efficiently today!</p>
+    </div>
+
+</body>
+</html>

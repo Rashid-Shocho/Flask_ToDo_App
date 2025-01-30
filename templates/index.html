@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+        ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        #search {
+            width: 200px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #search-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin-left: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .todo-list {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-update {
+            background-color: #ffc107;
+            color: black;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">ToDo App</div>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="#mytodo">My Todo</a></li>
+            <li><a href="#addtodo">Add Todo</a></li>
+        </ul>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search Todo..." onkeyup="filterTodos()">
+ 
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Add a New Todo</h1>
+        <form action="/webpage" method="POST">
+            <input type="text" name="title" placeholder="Todo Title" required>
+            <textarea name="desc" placeholder="Todo Description" required></textarea>
+            <button type="submit">Add Todo</button>
+        </form>
+    </div>
+
+    <div class="todo-list" id="todo-list">
+        <h2>My Todos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th scope='col'>Serial No.</th>
+                    <th scope='col'>Title</th>
+                    <th scope='col'>Description</th>
+                    <th scope='col'>Date</th>
+                    <th scope='col'>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="todos">
+                {% for todo in allTodo %}
+                <tr>
+                    <th scope='row'>{{ loop.index }}</th>
+                    <td>{{ todo.title }}</td>
+                    <td>{{ todo.desc }}</td>
+                    <td>{{ todo.date }}</td>
+                    <td>
+                        <a href="/update/{{ todo.sno }}" class="btn btn-update">Update</a>
+                        <a href="/delete/{{ todo.sno }}" class="btn btn-delete">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    function filterTodos() {
+        let input = document.getElementById("search").value.toLowerCase();
+        let rows = document.querySelectorAll("#todos tr");
+
+        rows.forEach(row => {
+            let title = row.cells[1].textContent.toLowerCase();
+            let desc = row.cells[2].textContent.toLowerCase();
+
+            if (title.includes(input) || desc.includes(input)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function submitSearch() {
+        let searchValue = document.getElementById("search").value;
+        window.location.href = "/webpage?search=" + encodeURIComponent(searchValue);
+    }
+    </script>
+</body>
+</html>
