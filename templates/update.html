@@ -65,21 +65,17 @@
     <nav>
         <div class="logo">ToDo App</div>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#mytodo">My Todo</a></li>
-
+            <li><a href="/home">Home</a></li>
+            <li><a href="/">My Todo</a></li>
         </ul>
         <input type="text" id="search" placeholder="Search Todo...">
     </nav>
-
+    
     <div class="container">
         <h1>Update your ToDo</h1>
         <form action="/update/{{todo.sno}}" method="POST">
-            <input type="text" name="title"  placeholder={{todo.title}} required>
-            <input type='text' name="desc"  placeholder={{todo.desc}} required></textarea>
+            <input type="text" name="title" placeholder="{{todo.title}}" required>
+            <textarea name="desc" placeholder="{{todo.desc}}" required></textarea>
             <button type="submit">Update</button>
         </form>
     </div>
-
-</body>
-</html>

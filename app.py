@@ -22,9 +22,9 @@ class Todo(db.Model):
 
 
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+# @app.route("/")
+# def hello_world():
+#     return "<p>Hello, World!</p>"
 
 @app.route("/show")
 def show():
@@ -48,7 +48,7 @@ def update(sno):
         todo.desc = desc
         db.session.add(todo)
         db.session.commit()
-        return redirect("/webpage")
+        return redirect("/")
 
 
     return render_template('update.html', todo=todo)
@@ -58,15 +58,15 @@ def delete(sno):
     todo = Todo.query.filter_by(sno = sno).first()
     db.session.delete(todo)
     db.session.commit()
-    return redirect("/webpage")
+    return redirect("/")
 
 @app.route("/home")
 def home():
     return render_template("home.html")
 
 
-@app.route("/webpage", methods=['GET', 'POST'])
-def webpage():
+@app.route("/", methods=['GET', 'POST'])
+def page():
     if request.method == 'POST':
         title = request.form.get('title')
         desc = request.form.get('desc')
@@ -75,9 +75,7 @@ def webpage():
             db.session.add(todo)
             db.session.commit()
     
-    # Get search query from request
     search_query = request.args.get('search', '')
-
     if search_query:
         allTodo = Todo.query.filter(
             (Todo.title.ilike(f"%{search_query}%")) | (Todo.desc.ilike(f"%{search_query}%"))

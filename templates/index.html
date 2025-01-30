@@ -11,6 +11,8 @@
             margin: 0;
             padding: 0;
         }
+
+        /* Responsive navigation bar */
         nav {
             display: flex;
             justify-content: space-between;
@@ -18,46 +20,38 @@
             background-color: #333;
             color: white;
             padding: 10px;
+            flex-wrap: wrap;  /* Allows wrapping of items on small screens */
+            text-align: center;
         }
+
         .logo {
             font-size: 24px;
             font-weight: bold;
         }
+
         ul {
             list-style: none;
             display: flex;
             gap: 15px;
+            margin: 0;
+            padding: 0;
         }
+
         ul li a {
             color: white;
             text-decoration: none;
         }
-        .search-container {
-            display: flex;
-            align-items: center;
-        }
-        #search {
-            width: 200px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        #search-btn {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            margin-left: 5px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        input[type="text"], textarea {
+
+        /* Form styles */
+        input[type="text"], textarea, button {
             width: 100%;
+            max-width: 400px;
             padding: 10px;
             margin: 5px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         button {
             background-color: #28a745;
             color: white;
@@ -66,33 +60,77 @@
             cursor: pointer;
             border-radius: 5px;
         }
+
+        /* Container for Todo list */
         .todo-list {
             margin-top: 20px;
         }
+
+        /* Table styles */
         table {
             width: 100%;
             border-collapse: collapse;
         }
+
         table, th, td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
-        .btn {
+
+        /* Flexbox container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Style Update and Delete buttons */
+        .update-btn, .delete-btn {
             padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
             text-decoration: none;
-            display: inline-block;
-        }
-        .btn-update {
-            background-color: #ffc107;
-            color: black;
-        }
-        .btn-delete {
-            background-color: #dc3545;
+            border-radius: 3px;
+            font-weight: bold;
             color: white;
+            cursor: pointer;
+        }
+
+        .update-btn {
+            background-color: #007bff;
+            margin-right: 5px;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
+        /* Media Queries for Mobile Devices */
+        @media (max-width: 768px) {
+            /* Stack navigation items on smaller screens */
+            ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            /* Make input fields and buttons full-width */
+            input[type="text"], textarea, button {
+                width: 100%;
+            }
+
+            /* Adjust table for smaller screens */
+            table, th, td {
+                display: block;
+                width: 100%;
+            }
+            th {
+                display: none;  /* Hide headers on small screens */
+            }
+            td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+            }
         }
     </style>
 </head>
@@ -101,74 +139,45 @@
         <div class="logo">ToDo App</div>
         <ul>
             <li><a href="/home">Home</a></li>
-            <li><a href="#mytodo">My Todo</a></li>
-            <li><a href="#addtodo">Add Todo</a></li>
+            <li><a href="/">My Todo</a></li>
         </ul>
-        <div class="search-container">
-            <input type="text" id="search" placeholder="Search Todo..." onkeyup="filterTodos()">
- 
-        </div>
+        <input type="text" id="search" placeholder="Search Todo...">
     </nav>
-
+    
     <div class="container">
         <h1>Add a New Todo</h1>
-        <form action="/webpage" method="POST">
+        <form action="/" method="POST">
             <input type="text" name="title" placeholder="Todo Title" required>
             <textarea name="desc" placeholder="Todo Description" required></textarea>
             <button type="submit">Add Todo</button>
         </form>
     </div>
-
+    
     <div class="todo-list" id="todo-list">
         <h2>My Todos</h2>
         <table>
             <thead>
                 <tr>
-                    <th scope='col'>Serial No.</th>
-                    <th scope='col'>Title</th>
-                    <th scope='col'>Description</th>
-                    <th scope='col'>Date</th>
-                    <th scope='col'>Actions</th>
+                    <th scope="col">Serial No.</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody id="todos">
                 {% for todo in allTodo %}
                 <tr>
-                    <th scope='row'>{{ loop.index }}</th>
-                    <td>{{ todo.title }}</td>
-                    <td>{{ todo.desc }}</td>
-                    <td>{{ todo.date }}</td>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{todo.title}}</td>
+                    <td>{{todo.desc}}</td>
+                    <td>{{todo.date}}</td>
                     <td>
-                        <a href="/update/{{ todo.sno }}" class="btn btn-update">Update</a>
-                        <a href="/delete/{{ todo.sno }}" class="btn btn-delete">Delete</a>
+                        <a href="/update/{{todo.sno}}" class="update-btn">Update</a>
+                        <a href="/delete/{{todo.sno}}" class="delete-btn">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
-    <script>
-    function filterTodos() {
-        let input = document.getElementById("search").value.toLowerCase();
-        let rows = document.querySelectorAll("#todos tr");
-
-        rows.forEach(row => {
-            let title = row.cells[1].textContent.toLowerCase();
-            let desc = row.cells[2].textContent.toLowerCase();
-
-            if (title.includes(input) || desc.includes(input)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-
-    function submitSearch() {
-        let searchValue = document.getElementById("search").value;
-        window.location.href = "/webpage?search=" + encodeURIComponent(searchValue);
-    }
-    </script>
-</body>
-</html>
